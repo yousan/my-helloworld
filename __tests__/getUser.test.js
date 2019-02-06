@@ -19,7 +19,7 @@ describe('getData', () => {
   it('implement tests here', () => {
     return wrapped.run({}).then((response) => {
       const body = JSON.parse(response.body);
-      expect(body).toHaveProperty('user.firstName', 'oba');
+      expect(body).toHaveProperty('user.firstName', 'Oba');
     });
   });
 });
