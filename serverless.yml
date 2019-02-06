@@ -57,8 +57,18 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
+  getData:
+    handler: functions/getUser/index.handler
+    events:
+        - http:
+            path: users
+            method: get
   myFunction:
     handler: handler.hello
+    events:
+        - http:
+            path: hello
+            method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

@@ -1,11 +1,23 @@
 {
   "devDependencies": {
+    "dotenv": "^6.2.0",
     "jest": "^24.1.0",
+    "sequelize-cli": "^5.4.0",
     "serverless": "^1.36.3",
     "serverless-jest-plugin": "^0.2.1",
     "serverless-offline": "^4.2.1"
   },
   "scripts": {
-    "test": "sls invoke test"
+    "sls-test": "sls invoke test",
+    "create": "sls create function",
+    "test": "jest",
+    "migrate": "sequelize db:migrate",
+    "seed": "sequelize db:seed:all",
+    "clear": "sequelize db:migrate:undo:all"
+  },
+  "dependencies": {
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.4",
+    "sequelize": "^4.42.0"
   }
 }
