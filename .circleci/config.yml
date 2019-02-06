@@ -8,6 +8,8 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.15
+        environment:
+        - NODE_ENV=test
       
       - image: circleci/mysql:latest
         environment:
