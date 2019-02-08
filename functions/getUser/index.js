@@ -5,7 +5,7 @@ const db = require('../../models/index');
 module.exports.handler = (event, context, callback) => {
   db.User.findOne({
     where: {
-      lastName: 'shuji'
+      lastName: 'Shuji'
     }
   }).then(user => {
     const response = {

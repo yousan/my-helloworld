@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "csv-parse": "^4.3.1",
     "dotenv": "^6.2.0",
     "jest": "^24.1.0",
     "sequelize-cli": "^5.4.0",
@@ -13,7 +14,9 @@
     "test": "jest",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
-    "clear": "sequelize db:migrate:undo:all"
+    "clear": "sequelize db:migrate:undo:all",
+    "testDBUp": "docker run --name test_db --env-file .env.dev -d -p 3306:3306 --rm mysql --default-authentication-plugin=mysql_native_password",
+    "testDBDown": "docker stop test_db"
   },
   "dependencies": {
     "mysql": "^2.16.0",

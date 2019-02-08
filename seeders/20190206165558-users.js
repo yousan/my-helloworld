@@ -1,35 +1,39 @@
 'use strict';
 
+const csvParser = require('csv-parse');
+const fs = require('fs');
+const path = require('path');
+
+const readPromise = path => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, (err, data) => {
+      if (err !== null) reject(err);
+      else resolve(data.toString());
+    });
+  });
+};
+
+const parsePromise = data => {
+  return new Promise((resolve, reject) => {
+    csvParser(data, { columns: true }, (err, record) => {
+      if (err !== undefined) reject(err);
+      else resolve(record);
+    });
+  });
+};
+
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkInsert('People', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
-
-    return queryInterface.bulkInsert('Users', [{
-      firstName: "Oba",
-      lastName: "Shuji",
-      email: "shuji365630@gmail.com",
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }], {});
+  up: async (queryInterface, Sequelize) => {
+    const csvPath = path.join(__dirname, path.basename(__filename).replace('.js', '.csv'));
+    try {
+      const record = await readPromise(csvPath).then(x => parsePromise(x));
+      return queryInterface.bulkInsert('Users', record, {});
+    } catch (e) {
+      console.log(e);
+    }
   },
 
   down: (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('People', null, {});
-    */
     return queryInterface.bulkDelete('Users', null, {});
   }
 };
