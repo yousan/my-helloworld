@@ -7,12 +7,17 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: circleci/node:8.15
+        environment:
+        - NODE_ENV=test
       
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+      - image: circleci/mysql:latest
+        environment:
+        - MYSQL_DATABASE=database_test
+        - MYSQL_ROOT_PASSWORD=mysql
+        ports:
+          - 3306:3306
+        command: --default-authentication-plugin=mysql_native_password
 
     working_directory: ~/repo
 
@@ -32,9 +37,14 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
+      
+      - run:
+          name: migration & seeding
+          command: yarn migrate && yarn seed
         
       # run tests!
       - run: yarn test
-
-
-
