@@ -64,7 +64,7 @@ functions:
             path: users
             method: get
   myFunction:
-    handler: handler.hello
+    handler: functions/hello/index.handler
     events:
         - http:
             path: hello

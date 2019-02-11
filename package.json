@@ -2,7 +2,13 @@
   "devDependencies": {
     "csv-parse": "^4.3.1",
     "dotenv": "^6.2.0",
+    "eslint": "^5.13.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "husky": "^1.3.1",
     "jest": "^24.1.0",
+    "lint-staged": "^8.1.3",
+    "prettier": "^1.16.4",
     "sequelize-cli": "^5.4.0",
     "serverless": "^1.36.3",
     "serverless-jest-plugin": "^0.2.1",
@@ -16,11 +22,19 @@
     "seed": "sequelize db:seed:all",
     "clear": "sequelize db:migrate:undo:all",
     "testDBUp": "docker run --name test_db --env-file .env.dev -d -p 3306:3306 --rm mysql --default-authentication-plugin=mysql_native_password",
-    "testDBDown": "docker stop test_db"
+    "testDBDown": "docker stop test_db",
+    "format": "eslint --fix functions/**/*.js",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "mysql": "^2.16.0",
     "mysql2": "^1.6.4",
     "sequelize": "^4.42.0"
+  },
+  "lint-staged": {
+    "*.js": [
+        "eslint --fix",
+        "git add"
+    ]
   }
 }

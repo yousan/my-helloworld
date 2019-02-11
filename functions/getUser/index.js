@@ -5,8 +5,8 @@ const db = require('../../models/index');
 module.exports.handler = (event, context, callback) => {
   db.User.findOne({
     where: {
-      lastName: 'Shuji'
-    }
+      lastName: 'Shuji',
+    },
   }).then(user => {
     const response = {
       statusCode: 200,
