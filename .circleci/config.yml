@@ -45,6 +45,8 @@ jobs:
       - run:
           name: migration & seeding
           command: yarn migrate && yarn seed
+
+      - run: yarn -s format -l
         
       # run tests!
       - run: yarn test
