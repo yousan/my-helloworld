@@ -7,4 +7,5 @@ jspm_packages
 
 .env
 
-.idea
+.idea/**/workspace.xml
+.idea/**/tasks.xmlidea/
