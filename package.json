@@ -26,7 +26,7 @@
     "clear": "sequelize db:migrate:undo:all",
     "testDBUp": "docker run --name test_db --env-file .env.dev -d -p 3306:3306 --rm mysql --default-authentication-plugin=mysql_native_password",
     "testDBDown": "docker stop test_db",
-    "format": "prettier 'functions/**/*.js'",
+    "format": "prettier '*.js'",
     "precommit": "lint-staged"
   },
   "dependencies": {
@@ -35,8 +35,8 @@
     "sequelize": "^4.42.0"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
+    "*.{js, json, css, md}": [
+      "prettier --write",
       "git add"
     ]
   }
