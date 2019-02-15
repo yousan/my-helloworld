@@ -9,12 +9,12 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:8.15
         environment:
-        - NODE_ENV=test
-      
+          - NODE_ENV=test
+
       - image: circleci/mysql:latest
         environment:
-        - MYSQL_DATABASE=database_test
-        - MYSQL_ROOT_PASSWORD=mysql
+          - MYSQL_DATABASE=database_test
+          - MYSQL_ROOT_PASSWORD=mysql
         ports:
           - 3306:3306
         command: --default-authentication-plugin=mysql_native_password
@@ -27,9 +27,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run: yarn install
 
@@ -37,14 +37,17 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      
+
       - run:
           name: Wait for db
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
-      
+
       - run:
           name: migration & seeding
           command: yarn migrate && yarn seed
-        
+
+      - run:
+          yarn exec eslint ./
+
       # run tests!
       - run: yarn test

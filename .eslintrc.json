@@ -1,6 +1,7 @@
 {
     "env": {
-        "jest/globals": true
+        "jest/globals": true,
+        "node": true
     },
     "extends": ["airbnb", "prettier"],
     "rules": {
